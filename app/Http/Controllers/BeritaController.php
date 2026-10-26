@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Berita;
+use App\Models\Kategori;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 
@@ -13,10 +14,10 @@ class BeritaController extends Controller
      */
     public function index()
     {
-        $data = Berita::paginate(10);
+        $berita = Berita::latest()->paginate(10);
 
         return Inertia::render('berita/index', [
-            'data' => $data
+            'berita' => $berita
         ]);
     }
 
@@ -25,7 +26,11 @@ class BeritaController extends Controller
      */
     public function create()
     {
-        //
+        $kategori = Kategori::get();
+
+        return Inertia::render('berita/create', [
+            'kategori' => $kategori
+        ]);
     }
 
     /**
