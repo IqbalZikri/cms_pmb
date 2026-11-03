@@ -12,19 +12,20 @@ import {
     AlertDialogTitle,
 } from '@/components/ui/alert-dialog';
 import { Button } from '@/components/ui/button';
-import { bulkDestroy } from '@/routes/kategori';
 
 interface Props {
-    ids: number[];
+    ids: (number | string)[];
+    url: string;               // endpoint bulk delete
+    label?: string;            // nama entitas, mis. "kategori", "dosen"
     onSuccess?: () => void;
 }
 
-export function BulkDeleteButton({ ids, onSuccess }: Props) {
+export function BulkDeleteButton({ ids, url, label = 'data', onSuccess }: Props) {
     const [open, setOpen] = useState(false);
     const [loading, setLoading] = useState(false);
 
     const handleDelete = () => {
-        router.delete(bulkDestroy().url, {
+        router.delete(url, {
             data: { ids },
             preserveScroll: true,
             onStart: () => setLoading(true),
@@ -38,11 +39,7 @@ export function BulkDeleteButton({ ids, onSuccess }: Props) {
 
     return (
         <>
-            <Button
-                variant="destructive"
-                size="sm"
-                onClick={() => setOpen(true)}
-            >
+            <Button variant="destructive" size="sm" onClick={() => setOpen(true)}>
                 <Trash2 className="mr-2 h-4 w-4" />
                 Hapus ({ids.length})
             </Button>
@@ -51,17 +48,14 @@ export function BulkDeleteButton({ ids, onSuccess }: Props) {
                 <AlertDialogContent>
                     <AlertDialogHeader>
                         <AlertDialogTitle>
-                            Hapus {ids.length} kategori?
+                            Hapus {ids.length} {label}?
                         </AlertDialogTitle>
                         <AlertDialogDescription>
-                            Data yang dipilih akan dihapus dan tidak bisa
-                            dikembalikan.
+                            Data yang dipilih akan dihapus dan tidak bisa dikembalikan.
                         </AlertDialogDescription>
                     </AlertDialogHeader>
                     <AlertDialogFooter>
-                        <AlertDialogCancel disabled={loading}>
-                            Batal
-                        </AlertDialogCancel>
+                        <AlertDialogCancel disabled={loading}>Batal</AlertDialogCancel>
                         <AlertDialogAction
                             onClick={(e) => {
                                 e.preventDefault();

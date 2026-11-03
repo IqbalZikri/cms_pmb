@@ -167,6 +167,9 @@ export default function Kategori({ kategori }: Props) {
 Kategori.layout = {
     breadcrumbs: [
         {
+            title: 'Berita',
+        },
+        {
             title: 'Kategori',
         },
     ],

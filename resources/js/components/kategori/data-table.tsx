@@ -17,9 +17,8 @@ import {
     TableRow,
 } from '@/components/ui/table';
 
-import { features, type DataTableFeatures } from './data-table-features';
+import { features, type DataTableFeatures } from '../ui/data-table-features';
 import { Button } from '../ui/button';
-import { BulkDeleteButton } from './bulk-delete-buttons';
 import { Kategori } from '@/types/kategori';
 
 interface DataTableProps<TData extends { id: number }, TValue> {

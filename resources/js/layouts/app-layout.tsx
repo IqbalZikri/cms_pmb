@@ -24,7 +24,6 @@ export default function AppLayout({
     return (
         <AppLayoutTemplate breadcrumbs={breadcrumbs}>
             {children}
-            <Toaster richColors position="top-right" />
         </AppLayoutTemplate>
     );
 }

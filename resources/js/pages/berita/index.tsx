@@ -10,10 +10,10 @@ import {
     CardHeader,
     CardTitle,
 } from '@/components/ui/card';
-import { DataTable } from '@/components/berita/data-table';
 import { columns } from '@/components/berita/columns';
 import { create, index } from '@/routes/berita';
 import { Berita } from '@/types/berita';
+import { DataTable } from '@/components/kategori/data-table';
 
 interface Props {
     // bisa array biasa (->get()) atau paginator (->paginate())

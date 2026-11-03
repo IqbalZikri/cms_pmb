@@ -48,7 +48,7 @@ export default function BeritaLayout({ children }: PropsWithChildren) {
                                     'bg-muted': isCurrentOrParentUrl(item.href),
                                 })}
                             >
-                                <Link href={item.href}>
+                                <Link href={item.href} viewTransition>
                                     {item.icon && (
                                         <item.icon className="h-4 w-4" />
                                     )}
@@ -61,10 +61,8 @@ export default function BeritaLayout({ children }: PropsWithChildren) {
 
                 <Separator className="my-6 lg:hidden" />
 
-                <div className="flex-1 w-full">
-                    <section className="space-y-12">
-                        {children}
-                    </section>
+                <div className="w-full flex-1">
+                    <section className="space-y-12">{children}</section>
                 </div>
             </div>
         </div>

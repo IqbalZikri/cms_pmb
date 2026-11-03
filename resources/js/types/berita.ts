@@ -1,7 +1,7 @@
 import { Kategori } from './kategori';
 
 export type Berita = {
-    id: number;
+    id: string;
     user_id: number;
     kategori_id: number;
     kategori: Kategori;

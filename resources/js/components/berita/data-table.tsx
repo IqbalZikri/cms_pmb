@@ -5,7 +5,6 @@ import {
     type ColumnDef,
     type RowData,
     type SortingState,
-    type ColumnFiltersState,
 } from '@tanstack/react-table';
 import * as React from 'react';
 
@@ -18,53 +17,50 @@ import {
     TableRow,
 } from '@/components/ui/table';
 
-import { features, type DataTableFeatures } from './data-table-features';
+import { features, type DataTableFeatures } from '../ui/data-table-features';
 import { Button } from '../ui/button';
-import { Input } from '../ui/input';
+import { Kategori } from '@/types/kategori';
+import { BulkDeleteButton } from '../ui/bulk-delete-buttons';
 
-interface DataTableProps<TData extends RowData> {
-    columns: ColumnDef<DataTableFeatures, TData>[];
+interface DataTableProps<TData extends { id: number }, TValue> {
+    columns: ColumnDef<DataTableFeatures, TData, TValue>[];
     data: TData[];
 }
 
-export function DataTable<TData extends RowData>({
+export function DataTable<TData extends { id: number }, TValue>({
     columns,
     data,
-}: DataTableProps<TData>) {
+}: DataTableProps<TData, TValue>) {
     const [sorting, setSorting] = React.useState<SortingState>([]);
-    const [columnFilters, setColumnFilters] =
-        React.useState<ColumnFiltersState>([]);
     const table = useTable({
+        getRowId: (row: Kategori) => String(row.id),
         features,
         data,
         columns,
         onSortingChange: setSorting,
-        onColumnFiltersChange: setColumnFilters,
         state: {
             sorting,
-            columnFilters,
         },
     });
+    const selectedIds = table
+        .getSelectedRowModel()
+        .rows.map((row) => (row.original as Kategori).id);
 
     return (
         <div>
-            <div className="flex items-center py-4">
-                <Input
-                    placeholder="Filter kategori..."
-                    value={
-                        (table
-                            .getColumn('nm_kategori')
-                            ?.getFilterValue() as string) ?? ''
-                    }
-                    onChange={(event) =>
-                        table
-                            .getColumn('email')
-                            ?.setFilterValue(event.target.value)
-                    }
-                    className="max-w-sm"
-                />
-            </div>
             <div className="overflow-hidden rounded-md border">
+                {selectedIds.length > 0 && (
+                    <div className="flex items-center justify-between rounded-md border bg-muted/50 px-4 py-2">
+                        <span className="text-sm text-muted-foreground">
+                            {selectedIds.length} baris dipilih
+                        </span>
+                        <BulkDeleteButton
+                        url=''
+                            ids={selectedIds}
+                            onSuccess={clearSection}
+                        />
+                    </div>
+                )}
                 <Table>
                     <TableHeader>
                         {table.getHeaderGroups().map((headerGroup) => (

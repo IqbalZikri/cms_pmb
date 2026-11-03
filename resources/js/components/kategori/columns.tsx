@@ -36,6 +36,14 @@ export const columns = columnHelper.columns([
         enableSorting: false,
         enableHiding: false,
     }),
+    columnHelper.display({
+        id: 'no',
+        header: 'No',
+        cell: ({ row, table }) =>
+            table.getRowModel().rows.findIndex((r) => r.id === row.id) + 1,
+        enableSorting: false,
+        enableHiding: false,
+    }),
     columnHelper.accessor('nm_kategori', {
         header: ({ column }) => {
             return (
