@@ -34,27 +34,39 @@ const slides = [
     },
 ];
 
-const keunggulan = [
+const berita = [
     {
-        icon: 'book',
-        judul: 'Kurikulum relevan',
-        isi: 'Materi kuliah disusun mengikuti kebutuhan dunia kerja dan perkembangan bidang ilmu.',
+        slug: 'judul-berita-1',
+        kategori: 'Pengumuman',
+        tanggal: 'Isi tanggal',
+        judul: 'Judul berita utama',
+        ringkasan:
+            'Ringkasan singkat berita utama. Tulis dua sampai tiga kalimat yang menjelaskan isi berita.',
+        gambar: '/pmb/gambar1.jpeg',
     },
     {
-        icon: 'users',
-        judul: 'Dosen pendamping',
-        isi: 'Setiap mahasiswa didampingi dosen wali dari semester pertama sampai lulus.',
+        slug: 'judul-berita-2',
+        kategori: 'Beasiswa',
+        tanggal: 'Isi tanggal',
+        judul: 'Judul berita kedua',
+        ringkasan: 'Ringkasan singkat berita kedua.',
+        gambar: '/pmb/gambar2.jpeg',
     },
     {
-        icon: 'briefcase',
-        judul: 'Praktik dan magang',
-        isi: 'Belajar langsung di lapangan lewat praktik, proyek, dan program magang.',
+        slug: 'judul-berita-3',
+        kategori: 'Kegiatan',
+        tanggal: 'Isi tanggal',
+        judul: 'Judul berita ketiga',
+        ringkasan: 'Ringkasan singkat berita ketiga.',
+        gambar: '/pmb/gambar3.jpeg',
     },
-    {
-        icon: 'building',
-        judul: 'Fasilitas lengkap',
-        isi: 'Ruang kelas, laboratorium, perpustakaan, dan area belajar bersama.',
-    },
+]; // TODO: ganti dengan berita asli
+
+const jalurPendaftaran = [
+    'jalur_pendaftaran/reguler.png',
+    'jalur_pendaftaran/rpl.png',
+    'jalur_pendaftaran/beasiswa.png',
+    'jalur_pendaftaran/magister.png',
 ];
 
 const prodi = [
@@ -65,24 +77,6 @@ const prodi = [
     { nama: 'Program Studi 5', jenjang: 'S1', fakultas: 'Fakultas C' },
     { nama: 'Program Studi 6', jenjang: 'S2', fakultas: 'Pascasarjana' },
 ]; // TODO: daftar prodi resmi
-
-const jalur = [
-    {
-        nama: 'Jalur Prestasi',
-        isi: 'Untuk calon mahasiswa dengan nilai rapor atau prestasi akademik/non-akademik.',
-        syarat: ['Fotokopi rapor', 'Sertifikat prestasi (jika ada)'],
-    },
-    {
-        nama: 'Jalur Reguler',
-        isi: 'Seleksi umum bagi lulusan SMA/SMK/sederajat melalui tes masuk kampus.',
-        syarat: ['Ijazah atau SKL', 'Mengikuti tes seleksi'],
-    },
-    {
-        nama: 'Jalur Pindahan',
-        isi: 'Untuk mahasiswa dari perguruan tinggi lain yang ingin melanjutkan studi.',
-        syarat: ['Transkrip nilai', 'Surat pindah dari kampus asal'],
-    },
-]; // TODO: sesuaikan dengan jalur yang benar-benar dibuka
 
 const alur = [
     {
@@ -437,47 +431,39 @@ export default function Beranda() {
 
                 {/* ============ INFO CEPAT ============ */}
                 <div className="relative z-10 mx-auto -mt-1 max-w-6xl px-6 md:px-16">
-                    <div className="grid gap-px overflow-hidden rounded-b-3xl bg-[#e8decd] shadow-xl shadow-[#0f7134]/10 md:grid-cols-3">
-                        {[
-                            ['Pendaftaran', 'Dibuka'],
-                            ['Gelombang aktif', 'Isi sesuai jadwal'],
-                            ['Bantuan', 'Chat panitia di WhatsApp'],
-                        ].map(([label, nilai]) => (
-                            <div key={label} className="bg-white px-8 py-6">
-                                <p className="text-sm text-neutral-500">
-                                    {label}
-                                </p>
-                                <p className="mt-1 text-lg font-bold text-[#0f7134]">
-                                    {nilai}
-                                </p>
-                            </div>
-                        ))}
+                    <div className="overflow-hidden rounded-b-3xl bg-white px-8 py-6 shadow-xl shadow-[#0f7134]/10">
+                        <p className="text-md text-center font-bold text-neutral-500">
+                            Jenis Pendaftaran
+                        </p>
+
+                        <div className="mt-3 grid gap-3 md:grid-cols-2">
+                            {['Jalur Reguler', 'Jalur Beasiswa'].map(
+                                (jalur) => (
+                                    <p
+                                        key={jalur}
+                                        className="rounded-xl bg-[#f3f6f5] px-5 py-3 text-center text-lg font-bold text-[#0f7134]"
+                                    >
+                                        {jalur}
+                                    </p>
+                                ),
+                            )}
+                        </div>
                     </div>
                 </div>
 
-                {/* ============ KEUNGGULAN ============ */}
-                <Section
-                    id="keunggulan"
-                    judul="Kuliah yang membekali kamu untuk bekerja dan berkembang"
-                    sub="Empat hal yang kamu dapatkan sejak hari pertama kuliah."
-                >
-                    <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                        {keunggulan.map((k) => (
-                            <div
-                                key={k.judul}
-                                className="rounded-2xl bg-[#f3f6f5] p-7"
-                            >
-                                <div className="grid h-12 w-12 place-items-center rounded-xl bg-[#0f7134] text-white">
-                                    <Icon name={k.icon} />
-                                </div>
-                                <h3 className="mt-5 text-lg font-bold">
-                                    {k.judul}
-                                </h3>
-                                <p className="mt-2 text-neutral-600">{k.isi}</p>
-                            </div>
-                        ))}
+                <section className={`md:px-16 md:py-28`}>
+                    <div className="mx-auto">
+                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
+                            {jalurPendaftaran.map((item) => (
+                                <img
+                                    src={item}
+                                    alt="jalur pendaftaran"
+                                    className="rounded-xl"
+                                />
+                            ))}
+                        </div>
                     </div>
-                </Section>
+                </section>
 
                 {/* ============ PROGRAM STUDI ============ */}
                 <Section
@@ -547,62 +533,98 @@ export default function Beranda() {
                     </motion.div>
                 </Section>
 
-                {/* ============ JALUR ============ */}
+                {/* ============ BERITA ============ */}
                 <Section
-                    id="jalur"
-                    judul="Tiga jalur masuk, pilih yang paling cocok"
-                    sub="Setiap jalur punya syarat berbeda. Pastikan berkasmu lengkap sebelum mendaftar."
+                    id="berita"
+                    judul="Berita dan informasi terbaru"
+                    sub="Pengumuman, jadwal, dan kegiatan terbaru seputar penerimaan mahasiswa baru."
                 >
-                    <div className="grid gap-6 lg:grid-cols-3">
-                        {jalur.map((j, i) => (
-                            <div
-                                key={j.nama}
-                                className={`flex flex-col rounded-3xl p-8 ${
-                                    i === 1
-                                        ? 'bg-[#0f7134] text-white'
-                                        : 'border border-[#e8decd] bg-white'
-                                }`}
-                            >
-                                <h3 className="text-2xl font-bold">{j.nama}</h3>
-                                <p
-                                    className={`mt-3 ${i === 1 ? 'text-white/80' : 'text-neutral-600'}`}
-                                >
-                                    {j.isi}
+                    <div className="grid gap-6 lg:grid-cols-5">
+                        {/* Berita utama */}
+                        <a
+                            href={`/berita/${berita[0].slug}`}
+                            className="group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-3xl bg-[#0f7134] text-white lg:col-span-3 lg:row-span-2"
+                        >
+                            <img
+                                src={berita[0].gambar}
+                                alt={berita[0].judul}
+                                className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                            />
+                            <div className="absolute inset-0 bg-gradient-to-t from-[#07381a]/95 via-black/30 to-transparent" />
+                            <div className="relative p-8 md:p-10">
+                                <div className="flex items-center gap-3 text-sm">
+                                    <span className="rounded-full bg-[#ffb652] px-3 py-1 font-semibold text-[#3b1d00]">
+                                        {berita[0].kategori}
+                                    </span>
+                                    <span className="text-white/80">
+                                        {berita[0].tanggal}
+                                    </span>
+                                </div>
+                                <h3 className="mt-4 text-2xl leading-tight font-bold md:text-4xl">
+                                    {berita[0].judul}
+                                </h3>
+                                <p className="mt-3 line-clamp-2 max-w-xl text-white/85">
+                                    {berita[0].ringkasan}
                                 </p>
-                                <ul className="mt-6 space-y-3">
-                                    {j.syarat.map((s) => (
-                                        <li
-                                            key={s}
-                                            className="flex items-start gap-3"
-                                        >
-                                            <span
-                                                className={`mt-0.5 grid h-5 w-5 shrink-0 place-items-center rounded-full ${
-                                                    i === 1
-                                                        ? 'bg-[#ffb652] text-[#3b1d00]'
-                                                        : 'bg-[#0f7134] text-white'
-                                                }`}
-                                            >
-                                                <Icon
-                                                    name="check"
-                                                    className="h-3 w-3"
-                                                />
-                                            </span>
-                                            {s}
-                                        </li>
-                                    ))}
-                                </ul>
-                                <a
-                                    href={DAFTAR_URL}
-                                    className={`mt-8 inline-flex items-center justify-center rounded-full px-6 py-3 font-semibold transition ${
-                                        i === 1
-                                            ? 'bg-[#ffb652] text-[#3b1d00] hover:bg-[#ffc574]'
-                                            : 'bg-[#0f7134] text-white hover:bg-[#0c5c2a]'
-                                    }`}
-                                >
-                                    Daftar lewat jalur ini
-                                </a>
+                                <span className="mt-5 inline-flex items-center gap-2 font-semibold text-[#ffb652]">
+                                    Baca selengkapnya
+                                    <Icon
+                                        name="arrow"
+                                        className="h-5 w-5 transition group-hover:translate-x-1"
+                                    />
+                                </span>
                             </div>
+                        </a>
+
+                        {/* Berita lainnya */}
+                        {berita.slice(1).map((b) => (
+                            <a
+                                key={b.slug}
+                                href={`/berita/${b.slug}`}
+                                className="group flex overflow-hidden rounded-3xl border border-[#e8decd] bg-white transition hover:shadow-lg hover:shadow-[#0f7134]/10 lg:col-span-2"
+                            >
+                                <div className="w-2/5 shrink-0 overflow-hidden">
+                                    <img
+                                        src={b.gambar}
+                                        alt={b.judul}
+                                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                    />
+                                </div>
+                                <div className="flex flex-1 flex-col p-6">
+                                    <div className="flex flex-wrap items-center gap-2 text-xs">
+                                        <span className="rounded-full bg-[#0f7134]/10 px-3 py-1 font-semibold text-[#0f7134]">
+                                            {b.kategori}
+                                        </span>
+                                        <span className="text-neutral-500">
+                                            {b.tanggal}
+                                        </span>
+                                    </div>
+                                    <h3 className="mt-3 line-clamp-2 text-lg leading-snug font-bold">
+                                        {b.judul}
+                                    </h3>
+                                    <p className="mt-2 line-clamp-2 text-sm text-neutral-600">
+                                        {b.ringkasan}
+                                    </p>
+                                    <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-[#c96517]">
+                                        Baca selengkapnya
+                                        <Icon
+                                            name="arrow"
+                                            className="h-4 w-4 transition group-hover:translate-x-1"
+                                        />
+                                    </span>
+                                </div>
+                            </a>
                         ))}
+                    </div>
+
+                    <div className="mt-10 text-center">
+                        <a
+                            href="/berita"
+                            className="inline-flex items-center gap-2 rounded-full border border-[#0f7134] px-7 py-3 font-semibold text-[#0f7134] transition hover:bg-[#0f7134] hover:text-white"
+                        >
+                            Lihat semua berita
+                            <Icon name="arrow" className="h-5 w-5" />
+                        </a>
                     </div>
                 </Section>
 

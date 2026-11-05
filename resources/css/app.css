@@ -138,7 +138,7 @@
 
     --radius: 0.45rem;
     --background: oklch(98.48% 0.0054 95.1);
-    --foreground: oklch(98.48% 0.0054 95.1);
+    --foreground: oklch(0.22 0.025 155);
     --card: oklch(1 0 0);
     --card-foreground: oklch(0.22 0.025 155);
     --popover: oklch(1 0 0);
@@ -156,6 +156,11 @@
     --border: oklch(0.88 0.018 102);
     --input: oklch(0.88 0.018 102);
     --ring: oklch(0.56 0.12 151);
+    --forest: oklch(0.29 0.085 151);
+    --gold: oklch(0.72 0.12 82);
+    --amber: oklch(0.68 0.17 52);
+    --ink: oklch(0.19 0.035 154);
+    --surface: oklch(0.965 0.012 98);
 
     background-color: var(--background);
     color: var(--foreground);
@@ -184,7 +189,7 @@
 
 /* Utility halaman publik */
 @utility page-shell {
-    width: min(100% - 2rem, 100rem);
+    width: min(100% - 2rem, 130rem);
     margin-inline: auto;
 }
 @utility eyebrow {

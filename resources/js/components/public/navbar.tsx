@@ -8,11 +8,12 @@ import { login } from "@/routes";
 const mainLinks = [
     { label: "Beranda", href: "/" },
     { label: "Program Studi", href: "/program-studi" },
-    { label: "Jalur Pendaftaran", href: "/penelitian" },
-    { label: "Biaya Kuliah", href: "/publikasi" },
-    { label: "Beasiswa", href: "/pkm" },
-    { label: "Panduan Pendaftaran", href: "/kontak" },
-    { label: "FAQ", href: "/kontak" },
+    { label: "Jalur Pendaftaran", href: "/jalur-pendaftaran" },
+    { label: "Biaya Kuliah", href: "/biaya-kuliah" },
+    { label: "Beasiswa", href: "/beasiswa" },
+    { label: "Panduan Pendaftaran", href: "/panduan" },
+    { label: "FAQ", href: "/faq" },
+    { label: "Brosur", href: "/brosur" },
     { label: "Kontak", href: "/kontak" },
 ] as const;
 

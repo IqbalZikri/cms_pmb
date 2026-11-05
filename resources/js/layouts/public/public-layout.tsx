@@ -1,3 +1,4 @@
+import { FooterPublic } from '@/components/public/footer';
 import NavbarPublic from '@/components/public/navbar';
 import { useEffect } from 'react';
 
@@ -15,6 +16,7 @@ export default function PublicLayout({
         <>
             <NavbarPublic />
             {children}
+            <FooterPublic />
         </>
     );
 }
