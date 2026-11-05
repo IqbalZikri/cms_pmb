@@ -2,10 +2,11 @@ import { createInertiaApp } from '@inertiajs/react';
 import { Toaster } from '@/components/ui/sonner';
 import { TooltipProvider } from '@/components/ui/tooltip';
 import { initializeTheme } from '@/hooks/use-appearance';
-import AppLayout from '@/layouts/app-layout';
+import AppLayout from '@/layouts/admin/app-layout';
 import AuthLayout from '@/layouts/auth-layout';
 import SettingsLayout from '@/layouts/settings/layout';
-import BeritaLayout from './layouts/berita-layout';
+import BeritaLayout from './layouts/admin/berita-layout';
+import PublicLayout from './layouts/public/public-layout';
 
 const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
 
@@ -15,6 +16,8 @@ createInertiaApp({
         switch (true) {
             case name === 'welcome':
                 return null;
+            case name.startsWith('public/'):
+                return PublicLayout;
             case name.startsWith('berita/') || name.startsWith('kategori/'):
                 return [AppLayout, BeritaLayout];
             case name.startsWith('auth/'):
