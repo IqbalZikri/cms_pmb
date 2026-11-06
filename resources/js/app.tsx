@@ -8,7 +8,7 @@ import SettingsLayout from '@/layouts/settings/layout';
 import BeritaLayout from './layouts/admin/berita-layout';
 import PublicLayout from './layouts/public/public-layout';
 
-const appName = import.meta.env.VITE_APP_NAME || 'Laravel';
+const appName = import.meta.env.VITE_APP_NAME || 'Penerimaan Mahasiswa Baru - Universitas Cendekia Abditama';
 
 createInertiaApp({
     title: (title) => (title ? `${title} - ${appName}` : appName),

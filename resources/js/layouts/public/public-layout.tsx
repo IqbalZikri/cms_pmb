@@ -13,10 +13,11 @@ export default function PublicLayout({
         return () => root.classList.remove('public-theme');
     }, []);
     return (
-        <>
+        <div className='min-h-screen'>
             <NavbarPublic />
             {children}
             <FooterPublic />
-        </>
+
+        </div>
     );
 }

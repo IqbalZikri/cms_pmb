@@ -189,7 +189,7 @@
 
 /* Utility halaman publik */
 @utility page-shell {
-    width: min(100% - 2rem, 130rem);
+    width: min(100% - 2rem, 100rem);
     margin-inline: auto;
 }
 @utility eyebrow {

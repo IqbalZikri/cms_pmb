@@ -30,16 +30,25 @@
             }
         </style>
 
-        <link rel="icon" href="/favicon.ico" sizes="any">
+        <link rel="icon" href="/icon/favicon.ico" sizes="any">
         <link rel="icon" href="/favicon.svg" type="image/svg+xml">
-        <link rel="apple-touch-icon" href="/apple-touch-icon.png">
+        <link rel="apple-touch-icon" href="/icon/apple-touch-icon.png">
 
         @fonts
 
         @viteReactRefresh
         @vite(['resources/css/app.css', 'resources/js/app.tsx', "resources/js/pages/{$page['component']}.tsx"])
         <x-inertia::head>
-            <title>{{ config('app.name', 'Laravel') }}</title>
+            <title>PMB - Universitas Cendekia Abditama</title>
+            <meta name="description" content="Penerimaan Mahasiswa Baru (PMB) Universitas Cendekia Abditama. Daftar online, lihat jalur pendaftaran, program studi, dan jadwal seleksi.">
+            <meta name="robots" content="index, follow">
+            <link rel="canonical" href="{{ url()->current() }}">
+
+            <meta property="og:type" content="website">
+            <meta property="og:site_name" content="Universitas Cendekia Abditama">
+            <meta property="og:title" content="PMB - Universitas Cendekia Abditama">
+            <meta property="og:description" content="Penerimaan Mahasiswa Baru (PMB) -  Universitas Cendekia Abditama.">
+            <meta property="og:url" content="{{ url()->current() }}">
         </x-inertia::head>
     </head>
     <body class="font-sans antialiased">

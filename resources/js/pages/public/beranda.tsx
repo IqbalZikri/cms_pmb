@@ -7,7 +7,7 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react';
 /*  (jangan tampilkan biaya/akreditasi/tanggal sebelum dikonfirmasi)   */
 /* ------------------------------------------------------------------ */
 
-const WA_NUMBER = '628xxxxxxxxxx'; // TODO: nomor WhatsApp panitia, format 62...
+const WA_NUMBER = '6285810279040'; // TODO: nomor WhatsApp panitia, format 62...
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Halo, saya ingin bertanya tentang PMB.')}`;
 const DAFTAR_URL = '/app'; // TODO: URL portal pendaftaran
 
@@ -655,7 +655,7 @@ export default function Beranda() {
                 </Section>
 
                 {/* ============ JADWAL ============ */}
-                <Section
+                {/* <Section
                     id="jadwal"
                     judul="Jadwal gelombang pendaftaran"
                     sub="Daftar lebih awal supaya persiapanmu lebih tenang."
@@ -681,7 +681,7 @@ export default function Beranda() {
                             </div>
                         ))}
                     </div>
-                </Section>
+                </Section> */}
 
                 {/* ============ BIAYA & BEASISWA ============ */}
                 <Section
