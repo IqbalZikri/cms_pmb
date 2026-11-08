@@ -13,6 +13,9 @@ return new class extends Migration
     {
         Schema::create('jalur_pendaftarans', function (Blueprint $table) {
             $table->id();
+            $table->string('nm_jalur_pendaftaran');
+            $table->string('gambar');
+            $table->string('status');
             $table->timestamps();
         });
     }

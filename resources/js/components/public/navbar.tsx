@@ -17,13 +17,8 @@ const mainLinks = [
     { label: "Kontak", href: "/kontak" },
 ] as const;
 
-const profileLinks = [
-    { label: "Visi & Misi", href: "/profil/visi-misi" },
-] as const;
-
 export default function NavbarPublic() {
     const [open, setOpen] = useState(false);
-    const [profileOpen, setProfileOpen] = useState(false);
 
     // url dari Inertia, mis. "/berita/judul-berita?page=2"
     const { url } = usePage();
@@ -34,12 +29,9 @@ export default function NavbarPublic() {
             ? path === "/"
             : path === href || path.startsWith(`${href}/`);
 
-    const isProfileActive = path.startsWith("/profil");
-
     const [beranda, ...otherLinks] = mainLinks;
     const closeMenu = () => {
         setOpen(false);
-        setProfileOpen(false);
     };
 
     return (
@@ -130,33 +122,6 @@ export default function NavbarPublic() {
                             >
                                 {beranda.label}
                             </Link>
-
-                            <button
-                                type="button"
-                                className={`mobile-link flex w-full justify-between ${isProfileActive ? "mobile-link-active" : ""}`}
-                                onClick={() => setProfileOpen((v) => !v)}
-                                aria-expanded={profileOpen}
-                            >
-                                Profil
-                                <ChevronDown
-                                    className={`size-4 transition-transform ${profileOpen ? "rotate-180" : ""}`}
-                                />
-                            </button>
-
-                            {profileOpen && (
-                                <div className="ml-4 border-l border-border pl-3">
-                                    {profileLinks.map((item) => (
-                                        <Link
-                                            key={item.href}
-                                            href={item.href}
-                                            onClick={closeMenu}
-                                            className={`mobile-link text-sm ${isActive(item.href) ? "mobile-link-active" : ""}`}
-                                        >
-                                            {item.label}
-                                        </Link>
-                                    ))}
-                                </div>
-                            )}
 
                             {otherLinks.map((item) => (
                                 <Link
