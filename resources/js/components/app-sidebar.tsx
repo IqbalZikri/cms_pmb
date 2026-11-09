@@ -20,12 +20,12 @@ import {
     SidebarMenuButton,
     SidebarMenuItem,
 } from '@/components/ui/sidebar';
-import { dashboard } from '@/routes';
+import { dashboard } from '@/routes/admin';
 import type { NavItem } from '@/types';
-import { index } from '@/routes/berita';
-import { index as index_fakultas } from '@/routes/fakultas';
-import { index as index_jalur_pendaftaran } from '@/routes/jalur-pendaftaran';
-import { index as index_prodi } from '@/routes/prodi';
+import { index } from '@/routes/admin/berita';
+import { index as index_fakultas } from '@/routes/admin/fakultas';
+import { index as index_jalur_pendaftaran } from '@/routes/admin/jalur-pendaftaran';
+import { index as index_prodi } from '@/routes/admin/prodi';
 
 const mainNavItems: NavItem[] = [
     {

@@ -6,8 +6,8 @@ import { Separator } from '@/components/ui/separator';
 import { useCurrentUrl } from '@/hooks/use-current-url';
 import { cn, toUrl } from '@/lib/utils';
 import type { NavItem } from '@/types';
-import { index } from '@/routes/berita';
-import { index as index_kategori } from '@/routes/kategori';
+import { index } from '@/routes/admin/berita';
+import { index as index_kategori } from '@/routes/admin/kategori';
 
 const sidebarNavItems: NavItem[] = [
     {

@@ -19,7 +19,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { destroy, store, update } from '@/routes/prodi';
+import { destroy, store, update } from '@/routes/admin/prodi';
 import { Fakultas } from '@/types/fakultas';
 import { Prodi } from '@/types/prodi';
 import { Head } from '@inertiajs/react';
@@ -48,7 +48,19 @@ export default function Index({ prodi, fakultas }: Props) {
             label: 'Nama Program Studi',
             name: 'nm_prodi',
             required: true,
-            placeholder: "Nama Program Studi"
+            placeholder: 'Nama Program Studi',
+        },
+        {
+            label: 'Jenjang',
+            name: 'jenjang',
+            required: true,
+            type: 'select',
+            options: [
+                { label: 'D3', value: 'D3' },
+                { label: 'S1', value: 'S1' },
+                { label: 'S2', value: 'S2' },
+                { label: 'S3', value: 'S3' },
+            ],
         },
     ];
 
@@ -83,6 +95,7 @@ export default function Index({ prodi, fakultas }: Props) {
                                     <TableHead>No</TableHead>
                                     <TableHead>Nama Fakultas</TableHead>
                                     <TableHead>Nama Program Studi</TableHead>
+                                    <TableHead>Jenjang</TableHead>
                                     <TableHead>Aksi</TableHead>
                                 </TableRow>
                             </TableHeader>
@@ -99,6 +112,9 @@ export default function Index({ prodi, fakultas }: Props) {
                                             </TableCell>
                                             <TableCell>
                                                 {item.nm_prodi}
+                                            </TableCell>
+                                            <TableCell>
+                                                {item.jenjang}
                                             </TableCell>
                                             <TableCell>
                                                 <div className="flex gap-2">

@@ -3,6 +3,7 @@ import { Fakultas } from "./fakultas";
 export type Prodi = {
     id: number;
     fakultas_id: number;
-    fakultas: Fakultas;
+    fakultas?: Fakultas;
     nm_prodi: string;
+    jenjang: string;
 };

@@ -60,22 +60,35 @@ export default function FormFields({ fields, errors, defaults = {} }: FormFields
                                 })}
                             </RadioGroup>
                         ) : item.type === "select" ? (
-                            <Select
-                                name={item.name}
-                                defaultValue={defaultValue}
-                                required={item.required}
-                            >
-                                <SelectTrigger id={id} className="w-full">
-                                    <SelectValue placeholder={item.placeholder ?? "Pilih salah satu"} />
-                                </SelectTrigger>
-                                <SelectContent>
-                                    {item.options?.map((opt) => (
-                                        <SelectItem key={opt.value} value={opt.value}>
-                                            {opt.label}
-                                        </SelectItem>
-                                    ))}
-                                </SelectContent>
-                            </Select>
+                             (() => {
+                                const hasOptions = (item.options?.length ?? 0) > 0;
+
+                                return (
+                                    <Select
+                                        name={item.name}
+                                        defaultValue={defaultValue}
+                                        required={item.required}
+                                        disabled={!hasOptions}
+                                    >
+                                        <SelectTrigger id={id} className="w-full">
+                                            <SelectValue
+                                                placeholder={
+                                                    hasOptions
+                                                        ? (item.placeholder ?? "Pilih salah satu")
+                                                        : "Belum ada data"
+                                                }
+                                            />
+                                        </SelectTrigger>
+                                        <SelectContent>
+                                            {item.options?.map((opt) => (
+                                                <SelectItem key={opt.value} value={opt.value}>
+                                                    {opt.label}
+                                                </SelectItem>
+                                            ))}
+                                        </SelectContent>
+                                    </Select>
+                                );
+                            })()
                         ) : isFile ? (
                             <FileInput
                                 id={id}

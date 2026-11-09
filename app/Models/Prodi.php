@@ -8,7 +8,8 @@ class Prodi extends Model
 {
     protected $fillable = [
         'fakultas_id',
-        'nm_prodi'
+        'nm_prodi',
+        'jenjang',
     ];
 
     public function fakultas(){

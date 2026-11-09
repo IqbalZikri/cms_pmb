@@ -16,7 +16,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { destroy, store, update } from '@/routes/jalur-pendaftaran';
+import { destroy, store, update } from '@/routes/admin/jalur-pendaftaran';
 import { JalurPendaftaran } from '@/types/jalur-pendaftaran';
 import { Head } from '@inertiajs/react';
 import {

@@ -4,7 +4,7 @@ export type Berita = {
     id: string;
     user_id: number;
     kategori_id: number;
-    kategori: Kategori;
+    kategori?: Kategori;
     judul: string;
     ringkasan_berita: string;
     isi_berita: string;
@@ -12,6 +12,6 @@ export type Berita = {
     gambar: string;
     status: string;
     slug: string;
-    published_at: Date;
+    published_at: string;
     deleted_at: Date;
 };

@@ -1,3 +1,6 @@
+import { Berita } from '@/types/berita';
+import { JalurPendaftaran } from '@/types/jalur-pendaftaran';
+import { Prodi } from '@/types/prodi';
 import { Head } from '@inertiajs/react';
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
@@ -10,6 +13,12 @@ import { useCallback, useEffect, useState, type ReactNode } from 'react';
 const WA_NUMBER = '6285810279040'; // TODO: nomor WhatsApp panitia, format 62...
 const WA_LINK = `https://wa.me/${WA_NUMBER}?text=${encodeURIComponent('Halo, saya ingin bertanya tentang PMB.')}`;
 const DAFTAR_URL = '/app'; // TODO: URL portal pendaftaran
+
+interface Props {
+    prodi: Prodi[];
+    berita: Berita[];
+    jalurPendaftaran: JalurPendaftaran[];
+}
 
 const slides = [
     {
@@ -33,50 +42,6 @@ const slides = [
         deskripsi: 'Penerimaan mahasiswa baru telah dibuka.',
     },
 ];
-
-const berita = [
-    {
-        slug: 'judul-berita-1',
-        kategori: 'Pengumuman',
-        tanggal: 'Isi tanggal',
-        judul: 'Judul berita utama',
-        ringkasan:
-            'Ringkasan singkat berita utama. Tulis dua sampai tiga kalimat yang menjelaskan isi berita.',
-        gambar: '/pmb/gambar1.jpeg',
-    },
-    {
-        slug: 'judul-berita-2',
-        kategori: 'Beasiswa',
-        tanggal: 'Isi tanggal',
-        judul: 'Judul berita kedua',
-        ringkasan: 'Ringkasan singkat berita kedua.',
-        gambar: '/pmb/gambar2.jpeg',
-    },
-    {
-        slug: 'judul-berita-3',
-        kategori: 'Kegiatan',
-        tanggal: 'Isi tanggal',
-        judul: 'Judul berita ketiga',
-        ringkasan: 'Ringkasan singkat berita ketiga.',
-        gambar: '/pmb/gambar3.jpeg',
-    },
-]; // TODO: ganti dengan berita asli
-
-const jalurPendaftaran = [
-    'jalur_pendaftaran/reguler.png',
-    'jalur_pendaftaran/rpl.png',
-    'jalur_pendaftaran/beasiswa.png',
-    'jalur_pendaftaran/magister.png',
-];
-
-const prodi = [
-    { nama: 'Program Studi 1', jenjang: 'S1', fakultas: 'Fakultas A' },
-    { nama: 'Program Studi 2', jenjang: 'S1', fakultas: 'Fakultas A' },
-    { nama: 'Program Studi 3', jenjang: 'S1', fakultas: 'Fakultas B' },
-    { nama: 'Program Studi 4', jenjang: 'D3', fakultas: 'Fakultas B' },
-    { nama: 'Program Studi 5', jenjang: 'S1', fakultas: 'Fakultas C' },
-    { nama: 'Program Studi 6', jenjang: 'S2', fakultas: 'Pascasarjana' },
-]; // TODO: daftar prodi resmi
 
 const alur = [
     {
@@ -258,7 +223,7 @@ function Faq({ q, a }: { q: string; a: string }) {
 /*  Halaman                                                            */
 /* ------------------------------------------------------------------ */
 
-export default function Beranda() {
+export default function Beranda({ prodi, berita, jalurPendaftaran }: Props) {
     const [index, setIndex] = useState(0);
     const [filter, setFilter] = useState('Semua');
     const [direction, setDirection] = useState(1);
@@ -451,19 +416,27 @@ export default function Beranda() {
                     </div>
                 </div>
 
-                <section className={`md:px-16 md:py-28`}>
-                    <div className="mx-auto">
-                        <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-                            {jalurPendaftaran.map((item) => (
-                                <img
-                                    src={item}
-                                    alt="jalur pendaftaran"
-                                    className="rounded-xl"
-                                />
-                            ))}
+                {jalurPendaftaran.length > 0 && (
+                    <section className="md:px-16 md:py-28">
+                        <div className="mx-auto">
+                            <div
+                                className="grid justify-items-center gap-6"
+                                style={{
+                                    gridTemplateColumns: `repeat(${Math.min(jalurPendaftaran.length, 4)}, minmax(0, 1fr))`,
+                                }}
+                            >
+                                {jalurPendaftaran.map((item) => (
+                                    <img
+                                        key={item.id}
+                                        src={`/storage/${item.gambar}`}
+                                        alt="jalur pendaftaran"
+                                        className="w-full max-w-[500px] rounded-xl"
+                                    />
+                                ))}
+                            </div>
                         </div>
-                    </div>
-                </section>
+                    </section>
+                )}
 
                 {/* ============ PROGRAM STUDI ============ */}
                 <Section
@@ -502,7 +475,7 @@ export default function Beranda() {
                             {prodiTampil.map((p) => (
                                 <motion.a
                                     layout
-                                    key={p.nama}
+                                    key={p.nm_prodi}
                                     href={DAFTAR_URL}
                                     initial={{ opacity: 0, scale: 0.95 }}
                                     animate={{ opacity: 1, scale: 1 }}
@@ -514,10 +487,10 @@ export default function Beranda() {
                                     </div>
                                     <div className="flex-1">
                                         <p className="text-sm text-neutral-500">
-                                            {p.fakultas}
+                                            {p.fakultas?.nm_fakultas}
                                         </p>
                                         <h3 className="mt-0.5 text-lg font-bold">
-                                            {p.nama}
+                                            {p.nm_prodi}
                                         </h3>
                                         <span className="mt-3 inline-block rounded-full bg-[#0f7134]/10 px-3 py-1 text-xs font-semibold text-[#0f7134]">
                                             {p.jenjang}
@@ -539,93 +512,127 @@ export default function Beranda() {
                     judul="Berita dan informasi terbaru"
                     sub="Pengumuman, jadwal, dan kegiatan terbaru seputar penerimaan mahasiswa baru."
                 >
-                    <div className="grid gap-6 lg:grid-cols-5">
-                        {/* Berita utama */}
-                        <a
-                            href={`/berita/${berita[0].slug}`}
-                            className="group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-3xl bg-[#0f7134] text-white lg:col-span-3 lg:row-span-2"
-                        >
-                            <img
-                                src={berita[0].gambar}
-                                alt={berita[0].judul}
-                                className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
-                            />
-                            <div className="absolute inset-0 bg-gradient-to-t from-[#07381a]/95 via-black/30 to-transparent" />
-                            <div className="relative p-8 md:p-10">
-                                <div className="flex items-center gap-3 text-sm">
-                                    <span className="rounded-full bg-[#ffb652] px-3 py-1 font-semibold text-[#3b1d00]">
-                                        {berita[0].kategori}
-                                    </span>
-                                    <span className="text-white/80">
-                                        {berita[0].tanggal}
-                                    </span>
-                                </div>
-                                <h3 className="mt-4 text-2xl leading-tight font-bold md:text-4xl">
-                                    {berita[0].judul}
-                                </h3>
-                                <p className="mt-3 line-clamp-2 max-w-xl text-white/85">
-                                    {berita[0].ringkasan}
-                                </p>
-                                <span className="mt-5 inline-flex items-center gap-2 font-semibold text-[#ffb652]">
-                                    Baca selengkapnya
-                                    <Icon
-                                        name="arrow"
-                                        className="h-5 w-5 transition group-hover:translate-x-1"
-                                    />
-                                </span>
+                    {berita.length === 0 ? (
+                        <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-[#e8decd] bg-white px-6 py-16 text-center">
+                            <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#0f7134]/10 text-[#0f7134]">
+                                <svg
+                                    xmlns="http://www.w3.org/2000/svg"
+                                    viewBox="0 0 24 24"
+                                    fill="none"
+                                    stroke="currentColor"
+                                    strokeWidth={1.8}
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    className="h-8 w-8"
+                                >
+                                    <path d="M4 5a2 2 0 0 1 2-2h11a2 2 0 0 1 2 2v14a2 2 0 0 0 2 2H6a2 2 0 0 1-2-2V5Z" />
+                                    <path d="M19 8h2v11a2 2 0 0 1-2 2" />
+                                    <path d="M8 8h7M8 12h7M8 16h4" />
+                                </svg>
                             </div>
-                        </a>
-
-                        {/* Berita lainnya */}
-                        {berita.slice(1).map((b) => (
-                            <a
-                                key={b.slug}
-                                href={`/berita/${b.slug}`}
-                                className="group flex overflow-hidden rounded-3xl border border-[#e8decd] bg-white transition hover:shadow-lg hover:shadow-[#0f7134]/10 lg:col-span-2"
-                            >
-                                <div className="w-2/5 shrink-0 overflow-hidden">
+                            <h3 className="mt-5 text-xl font-bold text-neutral-800">
+                                Belum ada berita
+                            </h3>
+                            <p className="mt-2 max-w-md text-neutral-600">
+                                Pengumuman dan informasi terbaru seputar
+                                penerimaan mahasiswa baru akan tampil di sini.
+                                Silakan kembali lagi nanti.
+                            </p>
+                        </div>
+                    ) : (
+                        <>
+                            <div className="grid gap-6 lg:grid-cols-5">
+                                {/* Berita utama */}
+                                <a
+                                    href={`/berita/${berita[0].slug}`}
+                                    className="group relative flex min-h-[420px] flex-col justify-end overflow-hidden rounded-3xl bg-[#0f7134] text-white lg:col-span-3 lg:row-span-2"
+                                >
                                     <img
-                                        src={b.gambar}
-                                        alt={b.judul}
-                                        className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                        src={berita[0].gambar}
+                                        alt={berita[0].judul}
+                                        className="absolute inset-0 h-full w-full object-cover transition duration-500 group-hover:scale-105"
                                     />
-                                </div>
-                                <div className="flex flex-1 flex-col p-6">
-                                    <div className="flex flex-wrap items-center gap-2 text-xs">
-                                        <span className="rounded-full bg-[#0f7134]/10 px-3 py-1 font-semibold text-[#0f7134]">
-                                            {b.kategori}
-                                        </span>
-                                        <span className="text-neutral-500">
-                                            {b.tanggal}
+                                    <div className="absolute inset-0 bg-gradient-to-t from-[#07381a]/95 via-black/30 to-transparent" />
+                                    <div className="relative p-8 md:p-10">
+                                        <div className="flex items-center gap-3 text-sm">
+                                            <span className="rounded-full bg-[#ffb652] px-3 py-1 font-semibold text-[#3b1d00]">
+                                                {
+                                                    berita[0].kategori
+                                                        ?.nm_kategori
+                                                }
+                                            </span>
+                                            <span className="text-white/80">
+                                                {berita[0].published_at}
+                                            </span>
+                                        </div>
+                                        <h3 className="mt-4 text-2xl leading-tight font-bold md:text-4xl">
+                                            {berita[0].judul}
+                                        </h3>
+                                        <p className="mt-3 line-clamp-2 max-w-xl text-white/85">
+                                            {berita[0].ringkasan_berita}
+                                        </p>
+                                        <span className="mt-5 inline-flex items-center gap-2 font-semibold text-[#ffb652]">
+                                            Baca selengkapnya
+                                            <Icon
+                                                name="arrow"
+                                                className="h-5 w-5 transition group-hover:translate-x-1"
+                                            />
                                         </span>
                                     </div>
-                                    <h3 className="mt-3 line-clamp-2 text-lg leading-snug font-bold">
-                                        {b.judul}
-                                    </h3>
-                                    <p className="mt-2 line-clamp-2 text-sm text-neutral-600">
-                                        {b.ringkasan}
-                                    </p>
-                                    <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-[#c96517]">
-                                        Baca selengkapnya
-                                        <Icon
-                                            name="arrow"
-                                            className="h-4 w-4 transition group-hover:translate-x-1"
-                                        />
-                                    </span>
-                                </div>
-                            </a>
-                        ))}
-                    </div>
+                                </a>
 
-                    <div className="mt-10 text-center">
-                        <a
-                            href="/berita"
-                            className="inline-flex items-center gap-2 rounded-full border border-[#0f7134] px-7 py-3 font-semibold text-[#0f7134] transition hover:bg-[#0f7134] hover:text-white"
-                        >
-                            Lihat semua berita
-                            <Icon name="arrow" className="h-5 w-5" />
-                        </a>
-                    </div>
+                                {/* Berita lainnya */}
+                                {berita.slice(1).map((b) => (
+                                    <a
+                                        key={b.slug}
+                                        href={`/berita/${b.slug}`}
+                                        className="group flex overflow-hidden rounded-3xl border border-[#e8decd] bg-white transition hover:shadow-lg hover:shadow-[#0f7134]/10 lg:col-span-2"
+                                    >
+                                        <div className="w-2/5 shrink-0 overflow-hidden">
+                                            <img
+                                                src={b.gambar}
+                                                alt={b.judul}
+                                                className="h-full w-full object-cover transition duration-500 group-hover:scale-105"
+                                            />
+                                        </div>
+                                        <div className="flex flex-1 flex-col p-6">
+                                            <div className="flex flex-wrap items-center gap-2 text-xs">
+                                                <span className="rounded-full bg-[#0f7134]/10 px-3 py-1 font-semibold text-[#0f7134]">
+                                                    {b.kategori?.nm_kategori}
+                                                </span>
+                                                <span className="text-neutral-500">
+                                                    {b.published_at}
+                                                </span>
+                                            </div>
+                                            <h3 className="mt-3 line-clamp-2 text-lg leading-snug font-bold">
+                                                {b.judul}
+                                            </h3>
+                                            <p className="mt-2 line-clamp-2 text-sm text-neutral-600">
+                                                {b.ringkasan_berita}
+                                            </p>
+                                            <span className="mt-auto inline-flex items-center gap-1.5 pt-4 text-sm font-semibold text-[#c96517]">
+                                                Baca selengkapnya
+                                                <Icon
+                                                    name="arrow"
+                                                    className="h-4 w-4 transition group-hover:translate-x-1"
+                                                />
+                                            </span>
+                                        </div>
+                                    </a>
+                                ))}
+                            </div>
+
+                            <div className="mt-10 text-center">
+                                <a
+                                    href="/berita"
+                                    className="inline-flex items-center gap-2 rounded-full border border-[#0f7134] px-7 py-3 font-semibold text-[#0f7134] transition hover:bg-[#0f7134] hover:text-white"
+                                >
+                                    Lihat semua berita
+                                    <Icon name="arrow" className="h-5 w-5" />
+                                </a>
+                            </div>
+                        </>
+                    )}
                 </Section>
 
                 {/* ============ ALUR ============ */}

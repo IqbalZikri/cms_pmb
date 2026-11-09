@@ -35,10 +35,12 @@ class ProdiController extends Controller
     {
         $validated = $request->validate([
             'fakultas_id' => 'required',
-            'nm_prodi' => 'required'
+            'nm_prodi' => 'required',
+            'jenjang' => 'required',
         ], [
             'fakultas_id.required' => 'Pilih salah satu fakultas',
-            'nm_prodi.required' => 'Nama prodi wajib diisi'
+            'nm_prodi.required' => 'Nama prodi wajib diisi',
+            'jenjang.required' => 'Pilih salah satu jenjang'
         ]);
 
         try {
@@ -58,10 +60,12 @@ class ProdiController extends Controller
     {
         $validated = $request->validate([
             'fakultas_id' => 'required',
-            'nm_prodi' => 'required'
+            'nm_prodi' => 'required',
+            'jenjang' => 'required',
         ], [
             'fakultas_id.required' => 'Pilih salah satu fakultas',
-            'nm_prodi.required' => 'Nama prodi wajib diisi'
+            'nm_prodi.required' => 'Nama prodi wajib diisi',
+            'jenjang.required' => 'Pilih salah satu jenjang'
         ]);
 
         try {

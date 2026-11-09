@@ -19,7 +19,7 @@ import {
     TableHeader,
     TableRow,
 } from '@/components/ui/table';
-import { destroy, store, update } from '@/routes/fakultas';
+import { destroy, store, update } from '@/routes/admin/fakultas';
 import { Fakultas } from '@/types/fakultas';
 import { Head } from '@inertiajs/react';
 import { University } from 'lucide-react';
