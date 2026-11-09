@@ -25,7 +25,10 @@ class ProdiController extends Controller
 
     public function public()
     {
-        return Inertia::render('public/prodi');
+        $prodis = Prodi::with('fakultas')->get();
+        return Inertia::render('public/prodi', [
+            'prodis' => $prodis
+        ]);
     }
 
     /**
@@ -37,10 +40,14 @@ class ProdiController extends Controller
             'fakultas_id' => 'required',
             'nm_prodi' => 'required',
             'jenjang' => 'required',
+            'deskripsi' => 'required',
+            'akreditasi' => 'required',
         ], [
             'fakultas_id.required' => 'Pilih salah satu fakultas',
             'nm_prodi.required' => 'Nama prodi wajib diisi',
-            'jenjang.required' => 'Pilih salah satu jenjang'
+            'jenjang.required' => 'Pilih salah satu jenjang',
+            'deskripsi.required' => 'Deskripsi wajib diisi',
+            'akreditasi.required' => 'Akreditasi wajib diisi',
         ]);
 
         try {
@@ -62,10 +69,14 @@ class ProdiController extends Controller
             'fakultas_id' => 'required',
             'nm_prodi' => 'required',
             'jenjang' => 'required',
+            'deskripsi' => 'required',
+            'akreditasi' => 'required',
         ], [
             'fakultas_id.required' => 'Pilih salah satu fakultas',
             'nm_prodi.required' => 'Nama prodi wajib diisi',
-            'jenjang.required' => 'Pilih salah satu jenjang'
+            'jenjang.required' => 'Pilih salah satu jenjang',
+            'deskripsi.required' => 'Deskripsi wajib diisi',
+            'akreditasi.required' => 'Akreditasi wajib diisi',
         ]);
 
         try {

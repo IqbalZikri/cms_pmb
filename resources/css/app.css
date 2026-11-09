@@ -167,7 +167,7 @@
     font-family: var(--font-sans);
     min-width: 320px;
     overflow-x: clip;
-    scrollbar-width: none;
+    /* scrollbar-width: none; */
 }
 
 .public-theme h1,

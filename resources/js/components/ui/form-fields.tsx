@@ -39,7 +39,7 @@ export default function FormFields({ fields, errors, defaults = {} }: FormFields
 
                 return (
                     <Field key={item.name}>
-                        <FieldLabel htmlFor={id}>{item.label}</FieldLabel>
+                        <FieldLabel htmlFor={id}>{item.label} {item.required === true ? (<span className="text-red-500">*</span>) : (<></>)}</FieldLabel>
 
                         {item.type === "radio" ? (
                             <RadioGroup

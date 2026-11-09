@@ -1,6 +1,5 @@
-
-import { useMemo, useState } from "react";
-import { Link } from "@inertiajs/react";
+import { useMemo, useState } from 'react';
+import { Link } from '@inertiajs/react';
 import {
     ArrowRight,
     ArrowUpRight,
@@ -10,12 +9,9 @@ import {
     Sparkles,
     Building2,
     X,
-} from "lucide-react";
-import {
-    motion,
-    AnimatePresence,
-    MotionConfig,
-} from "motion/react";
+} from 'lucide-react';
+import { motion, AnimatePresence, MotionConfig } from 'motion/react';
+import { Prodi } from '@/types/prodi';
 
 // ======================================================
 // ANIMATION VARIANTS
@@ -31,7 +27,7 @@ const fadeUp = {
         y: 0,
         transition: {
             duration: 0.7,
-            ease: "easeOut" as const,
+            ease: 'easeOut' as const,
         },
     },
 };
@@ -69,7 +65,7 @@ const cardVariants = {
         scale: 1,
         transition: {
             duration: 0.55,
-            ease: "easeOut" as const,
+            ease: 'easeOut' as const,
         },
     },
     exit: {
@@ -82,111 +78,26 @@ const cardVariants = {
     },
 };
 
-// ======================================================
-// TYPE & DATA
-// ======================================================
+const filters = ['Semua', 'D3', 'S1', 'S2'];
 
-type ProgramStudi = {
-    id: number;
-    nama: string;
-    fakultas: string;
-    jenjang: string;
-    deskripsi: string;
-    akreditasi: string;
-    slug: string;
-    warna: string;
-};
+interface Props {
+    prodis: Prodi[];
+}
 
-const programs: ProgramStudi[] = [
-    {
-        id: 1,
-        nama: "Nama Program Studi 1",
-        fakultas: "Fakultas Ekonomi dan Bisnis",
-        jenjang: "S1",
-        deskripsi:
-            "Pelajari ilmu, keterampilan, dan strategi profesional untuk menghadapi tantangan dunia kerja.",
-        akreditasi: "Akreditasi institusi/prodi",
-        slug: "#",
-        warna: "bg-emerald-50 text-emerald-800",
-    },
-    {
-        id: 2,
-        nama: "Nama Program Studi 2",
-        fakultas: "Fakultas Ekonomi dan Bisnis",
-        jenjang: "S1",
-        deskripsi:
-            "Kembangkan kemampuan analisis, pemecahan masalah, dan inovasi untuk masa depan.",
-        akreditasi: "Akreditasi institusi/prodi",
-        slug: "#",
-        warna: "bg-amber-50 text-amber-800",
-    },
-    {
-        id: 3,
-        nama: "Nama Program Studi 3",
-        fakultas: "Fakultas Teknik dan Informatika",
-        jenjang: "S1",
-        deskripsi:
-            "Bangun kompetensi teknologi dan kreativitas untuk menciptakan solusi digital.",
-        akreditasi: "Akreditasi institusi/prodi",
-        slug: "#",
-        warna: "bg-blue-50 text-blue-800",
-    },
-    {
-        id: 4,
-        nama: "Nama Program Studi 4",
-        fakultas: "Fakultas Teknik dan Informatika",
-        jenjang: "S1",
-        deskripsi:
-            "Persiapkan diri menjadi tenaga profesional yang adaptif dan kompetitif.",
-        akreditasi: "Akreditasi institusi/prodi",
-        slug: "#",
-        warna: "bg-purple-50 text-purple-800",
-    },
-    {
-        id: 5,
-        nama: "Nama Program Studi 5",
-        fakultas: "Fakultas Ilmu Sosial",
-        jenjang: "S1",
-        deskripsi:
-            "Kembangkan wawasan, komunikasi, dan kemampuan profesional untuk masyarakat.",
-        akreditasi: "Akreditasi institusi/prodi",
-        slug: "#",
-        warna: "bg-orange-50 text-orange-800",
-    },
-    {
-        id: 6,
-        nama: "Nama Program Studi 6",
-        fakultas: "Fakultas Ilmu Sosial",
-        jenjang: "D3",
-        deskripsi:
-            "Dapatkan keterampilan praktis dan pengalaman untuk memasuki dunia profesional.",
-        akreditasi: "Akreditasi institusi/prodi",
-        slug: "#",
-        warna: "bg-teal-50 text-teal-800",
-    },
-];
+export default function ProgramStudi({ prodis }: Props) {
+    const [search, setSearch] = useState('');
+    const [activeFilter, setActiveFilter] = useState('Semua');
 
-const filters = ["Semua", "D3", "S1", "S2"];
-
-// ======================================================
-// COMPONENT
-// ======================================================
-
-export default function ProgramStudi() {
-    const [search, setSearch] = useState("");
-    const [activeFilter, setActiveFilter] = useState("Semua");
-
-    const filteredPrograms = useMemo(() => {
-        return programs.filter((program) => {
+    const filteredProdis = useMemo(() => {
+        return prodis.filter((prodi) => {
             const keyword = search.toLowerCase();
 
             const matchesSearch =
-                program.nama.toLowerCase().includes(keyword) ||
-                program.fakultas.toLowerCase().includes(keyword);
+                prodi.nm_prodi.toLowerCase().includes(keyword) ||
+                prodi.fakultas?.nm_fakultas.toLowerCase().includes(keyword);
 
             const matchesFilter =
-                activeFilter === "Semua" ||
-                program.jenjang === activeFilter;
+                activeFilter === 'Semua' || prodi.jenjang === activeFilter;
 
             return matchesSearch && matchesFilter;
         });
@@ -209,7 +120,7 @@ export default function ProgramStudi() {
                         animate={{ scale: 1 }}
                         transition={{
                             duration: 3,
-                            ease: "easeOut",
+                            ease: 'easeOut',
                         }}
                     />
 
@@ -223,7 +134,7 @@ export default function ProgramStudi() {
 
                     {/* Decorative light */}
                     <motion.div
-                        className="absolute -right-40 -top-40 -z-10 size-[500px] rounded-full bg-[#D8B66A]/15 blur-[100px]"
+                        className="absolute -top-40 -right-40 -z-10 size-[500px] rounded-full bg-[#D8B66A]/15 blur-[100px]"
                         animate={{
                             x: [0, -30, 0],
                             y: [0, 25, 0],
@@ -231,7 +142,7 @@ export default function ProgramStudi() {
                         transition={{
                             duration: 9,
                             repeat: Infinity,
-                            ease: "easeInOut",
+                            ease: 'easeInOut',
                         }}
                     />
 
@@ -311,10 +222,9 @@ export default function ProgramStudi() {
                             transition={{
                                 duration: 1,
                                 delay: 0.5,
-                                ease: "easeOut",
+                                ease: 'easeOut',
                             }}
                         >
-
                             <div className="absolute -inset-10 rounded-full border border-[#D8B66A]/10" />
 
                             <div className="relative mx-auto flex aspect-square max-w-[340px] items-center justify-center rounded-full bg-white/5 backdrop-blur-sm">
@@ -325,7 +235,7 @@ export default function ProgramStudi() {
                                     transition={{
                                         duration: 4,
                                         repeat: Infinity,
-                                        ease: "easeInOut",
+                                        ease: 'easeInOut',
                                     }}
                                     className="flex size-56 items-center justify-center rounded-full border border-[#D8B66A]/40 bg-[#D8B66A]/10"
                                 >
@@ -340,7 +250,7 @@ export default function ProgramStudi() {
                                     transition={{
                                         duration: 3,
                                         repeat: Infinity,
-                                        ease: "easeInOut",
+                                        ease: 'easeInOut',
                                     }}
                                     className="absolute top-10 -right-2 rounded-xl border border-white/10 bg-white/10 p-4 backdrop-blur-md"
                                 >
@@ -352,7 +262,7 @@ export default function ProgramStudi() {
                                     transition={{
                                         duration: 3.5,
                                         repeat: Infinity,
-                                        ease: "easeInOut",
+                                        ease: 'easeInOut',
                                     }}
                                     className="absolute -bottom-1 left-0 rounded-xl border border-white/10 bg-white/10 p-4 backdrop-blur-md"
                                 >
@@ -376,7 +286,7 @@ export default function ProgramStudi() {
 
                 <section
                     id="daftar-program"
-                    className="section-pad scroll-mt-20 bg-[var(--surface)]"
+                    className="scroll-mt-20 bg-[var(--surface)] section-pad"
                 >
                     <div className="page-shell">
                         <motion.div
@@ -405,8 +315,8 @@ export default function ProgramStudi() {
                                     variants={fadeUp}
                                     className="mt-3 max-w-xl text-sm leading-7 text-muted-foreground"
                                 >
-                                    Pilih program studi yang sesuai dengan
-                                    minat dan rencana masa depanmu.
+                                    Pilih program studi yang sesuai dengan minat
+                                    dan rencana masa depanmu.
                                 </motion.p>
                             </div>
 
@@ -414,10 +324,10 @@ export default function ProgramStudi() {
                                 variants={fadeUp}
                                 className="text-sm text-muted-foreground"
                             >
-                                Menampilkan{" "}
+                                Menampilkan{' '}
                                 <strong className="text-primary">
-                                    {filteredPrograms.length}
-                                </strong>{" "}
+                                    {filteredProdis.length}
+                                </strong>{' '}
                                 program studi
                             </motion.div>
                         </motion.div>
@@ -439,7 +349,7 @@ export default function ProgramStudi() {
                                     value={search}
                                     onChange={(e) => setSearch(e.target.value)}
                                     placeholder="Cari nama program studi atau fakultas..."
-                                    className="h-12 w-full rounded-lg border border-input bg-background pr-10 pl-11 text-sm text-foreground outline-none transition placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-ring/20"
+                                    className="h-12 w-full rounded-lg border border-input bg-background pr-10 pl-11 text-sm text-foreground transition outline-none placeholder:text-muted-foreground focus:border-primary focus:ring-2 focus:ring-ring/20"
                                 />
 
                                 <AnimatePresence>
@@ -458,7 +368,7 @@ export default function ProgramStudi() {
                                                 scale: 0.7,
                                             }}
                                             type="button"
-                                            onClick={() => setSearch("")}
+                                            onClick={() => setSearch('')}
                                             className="absolute top-1/2 right-4 -translate-y-1/2 text-muted-foreground hover:text-foreground"
                                             aria-label="Hapus pencarian"
                                         >
@@ -477,8 +387,8 @@ export default function ProgramStudi() {
                                         onClick={() => setActiveFilter(filter)}
                                         className={`rounded-lg px-5 py-2.5 text-sm font-semibold transition ${
                                             activeFilter === filter
-                                                ? "bg-primary text-primary-foreground shadow-md"
-                                                : "bg-muted text-muted-foreground hover:bg-secondary hover:text-secondary-foreground"
+                                                ? 'bg-primary text-primary-foreground shadow-md'
+                                                : 'bg-muted text-muted-foreground hover:bg-secondary hover:text-secondary-foreground'
                                         }`}
                                     >
                                         {filter}
@@ -494,9 +404,9 @@ export default function ProgramStudi() {
                             className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3"
                         >
                             <AnimatePresence mode="popLayout">
-                                {filteredPrograms.map((program, index) => (
+                                {filteredProdis.map((prodi, index) => (
                                     <motion.article
-                                        key={program.id}
+                                        key={prodi.id}
                                         layout
                                         variants={cardVariants}
                                         initial="hidden"
@@ -505,7 +415,7 @@ export default function ProgramStudi() {
                                         transition={{
                                             layout: {
                                                 duration: 0.35,
-                                                ease: "easeInOut",
+                                                ease: 'easeInOut',
                                             },
                                         }}
                                         whileHover={{
@@ -530,7 +440,7 @@ export default function ProgramStudi() {
                                                 transition={{
                                                     duration: 40,
                                                     repeat: Infinity,
-                                                    ease: "linear",
+                                                    ease: 'linear',
                                                 }}
                                             />
 
@@ -551,7 +461,7 @@ export default function ProgramStudi() {
                                             </motion.div>
 
                                             <span className="absolute top-4 left-4 rounded-md bg-[#D8B66A] px-3 py-1 text-xs font-bold text-[#073D20]">
-                                                {program.jenjang}
+                                                {prodi.jenjang}
                                             </span>
 
                                             <span className="absolute right-4 bottom-4 text-xs font-medium text-white/60">
@@ -562,22 +472,22 @@ export default function ProgramStudi() {
                                         {/* Card content */}
                                         <div className="p-6">
                                             <span className="text-xs font-semibold tracking-wider text-primary uppercase">
-                                                {program.fakultas}
+                                                FAKULTAS {prodi.fakultas?.nm_fakultas}
                                             </span>
 
                                             <h3 className="font-display mt-3 text-xl font-semibold text-card-foreground transition-colors group-hover:text-primary">
-                                                {program.nama}
+                                               {prodi.jenjang} {prodi.nm_prodi}
                                             </h3>
 
                                             <p className="mt-3 min-h-[72px] text-sm leading-6 text-muted-foreground">
-                                                {program.deskripsi}
+                                                {prodi.deskripsi}
                                             </p>
 
                                             <div className="mt-5 flex items-center justify-between border-t border-border pt-4">
                                                 <span
-                                                    className={`rounded-md px-3 py-1.5 text-xs font-semibold ${program.warna}`}
+                                                    className={`rounded-md bg-emerald-50 px-3 py-1.5 text-xs font-semibold text-emerald-800`}
                                                 >
-                                                    {program.akreditasi}
+                                                    {prodi.akreditasi}
                                                 </span>
 
                                                 <motion.div
@@ -588,9 +498,9 @@ export default function ProgramStudi() {
                                                     whileTap={{ scale: 0.9 }}
                                                 >
                                                     <Link
-                                                        href={program.slug}
+                                                        href={prodi.url ?? "#   "}
                                                         className="flex size-9 items-center justify-center rounded-full bg-secondary text-primary transition-colors group-hover:bg-primary group-hover:text-primary-foreground"
-                                                        aria-label={`Detail ${program.nama}`}
+                                                        aria-label={`Detail ${prodi.nm_prodi}`}
                                                     >
                                                         <ArrowUpRight className="size-4" />
                                                     </Link>
@@ -605,7 +515,7 @@ export default function ProgramStudi() {
                         {/* EMPTY STATE */}
 
                         <AnimatePresence>
-                            {filteredPrograms.length === 0 && (
+                            {filteredProdis.length === 0 && (
                                 <motion.div
                                     initial={{
                                         opacity: 0,
@@ -630,8 +540,8 @@ export default function ProgramStudi() {
                                     </h3>
 
                                     <p className="mt-2 text-sm text-muted-foreground">
-                                        Coba gunakan kata kunci atau filter
-                                        yang berbeda.
+                                        Coba gunakan kata kunci atau filter yang
+                                        berbeda.
                                     </p>
 
                                     <motion.button
@@ -639,8 +549,8 @@ export default function ProgramStudi() {
                                         whileTap={{ scale: 0.95 }}
                                         type="button"
                                         onClick={() => {
-                                            setSearch("");
-                                            setActiveFilter("Semua");
+                                            setSearch('');
+                                            setActiveFilter('Semua');
                                         }}
                                         className="mt-5 text-sm font-semibold text-primary hover:underline"
                                     >
@@ -672,7 +582,7 @@ export default function ProgramStudi() {
                             viewport={{ once: true, amount: 0.25 }}
                             transition={{
                                 duration: 0.8,
-                                ease: "easeOut",
+                                ease: 'easeOut',
                             }}
                             className="relative overflow-hidden rounded-2xl bg-[#0f7134] px-6 py-12 text-center text-white md:px-12 md:py-16"
                         >
@@ -681,7 +591,7 @@ export default function ProgramStudi() {
                                 transition={{
                                     duration: 60,
                                     repeat: Infinity,
-                                    ease: "linear",
+                                    ease: 'linear',
                                 }}
                                 className="absolute -right-16 -bottom-32 size-80 rounded-full border border-[#D8B66A]/20"
                             />
@@ -694,9 +604,9 @@ export default function ProgramStudi() {
                                 transition={{
                                     duration: 8,
                                     repeat: Infinity,
-                                    ease: "easeInOut",
+                                    ease: 'easeInOut',
                                 }}
-                                className="absolute -left-20 -top-20 size-64 rounded-full bg-[#D8B66A]/10 blur-3xl"
+                                className="absolute -top-20 -left-20 size-64 rounded-full bg-[#D8B66A]/10 blur-3xl"
                             />
 
                             <div className="absolute inset-0 bg-heritage-pattern opacity-20" />

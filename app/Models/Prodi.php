@@ -10,6 +10,9 @@ class Prodi extends Model
         'fakultas_id',
         'nm_prodi',
         'jenjang',
+        'deskripsi',
+        'akreditasi',
+        'url',
     ];
 
     public function fakultas(){

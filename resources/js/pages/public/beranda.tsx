@@ -4,7 +4,7 @@ import { Prodi } from '@/types/prodi';
 import { Tahap, TahapRegistrasi } from '@/types/tahap-registrasi';
 import { Head } from '@inertiajs/react';
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
-import { BookOpen } from 'lucide-react';
+import { BookOpen, ClipboardList } from 'lucide-react';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 
 /* ------------------------------------------------------------------ */
@@ -676,14 +676,14 @@ export default function Beranda({
                 {/* ============ ALUR ============ */}
                 <Section
                     id="alur"
-                    judul="langkah menjadi mahasiswa baru"
+                    judul="Langkah menjadi mahasiswa baru"
                     sub="Seluruh proses dilakukan online lewat portal pendaftaran."
                     className="bg-[#e8decd]/45"
                 >
-                    <ol className="grid gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
-                        {!tahapRegistrasi && (
-                            <>
-                                {saved.map((a, i) => (
+                    {tahapRegistrasi ? (
+                        <>
+                            {saved.map((a, i) => (
+                                <ol className="grid gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
                                     <li key={i} className="flex gap-5">
                                         <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#c96517] text-lg font-bold text-white">
                                             {i + 1}
@@ -697,10 +697,28 @@ export default function Beranda({
                                             </p>
                                         </div>
                                     </li>
-                                ))}
-                            </>
-                        )}
-                    </ol>
+                                </ol>
+                            ))}
+                        </>
+                    ) : (
+                        <>
+                            <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-[#e8decd] bg-white px-6 py-16 text-center">
+                                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#0f7134]/10 text-[#0f7134]">
+                                    <ClipboardList
+                                        className="h-8 w-8"
+                                        strokeWidth={1.8}
+                                    />
+                                </div>
+                                <h3 className="mt-5 text-xl font-bold text-neutral-800">
+                                    Belum ada langkah registrasi
+                                </h3>
+                                <p className="mt-2 max-w-md text-neutral-600">
+                                    Langkah registrasi akan tampil di sini.
+                                    Silakan kembali lagi nanti.
+                                </p>
+                            </div>
+                        </>
+                    )}
                 </Section>
 
                 {/* ============ JADWAL ============ */}

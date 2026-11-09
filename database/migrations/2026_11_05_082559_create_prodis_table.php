@@ -16,6 +16,9 @@ return new class extends Migration
             $table->foreignId('fakultas_id')->constrained()->cascadeOnDelete();
             $table->string('nm_prodi');
             $table->enum('jenjang', ['D3', 'S1', 'S2', 'S3', 'Profesi']);
+            $table->string('deskripsi');
+            $table->string('akreditasi');
+            $table->string('url')->nullable();
             $table->timestamps();
         });
     }

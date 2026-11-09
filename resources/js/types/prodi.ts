@@ -1,4 +1,4 @@
-import { Fakultas } from "./fakultas";
+import { Fakultas } from './fakultas';
 
 export type Prodi = {
     id: number;
@@ -6,4 +6,7 @@ export type Prodi = {
     fakultas?: Fakultas;
     nm_prodi: string;
     jenjang: string;
+    deskripsi: string;
+    akreditasi: string;
+    url: string;
 };
