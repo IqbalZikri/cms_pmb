@@ -2,13 +2,20 @@ import { Field, FieldGroup, FieldLabel } from "./field";
 import FileInput from "./file-input";
 import { Input } from "./input";
 import { RadioGroup, RadioGroupItem } from "./radio-group";
+import {
+    Select,
+    SelectContent,
+    SelectItem,
+    SelectTrigger,
+    SelectValue,
+} from "./select";
 
 export interface FormFieldConfig {
     label: string;
     name: string;
-    type?: "text" | "number" | "email" | "password" | "date" | "radio" | "file";
+    type?: "text" | "number" | "email" | "password" | "date" | "radio" | "file" | "select";
     required?: boolean;
-    options?: { label: string; value: string }[]; // khusus type "radio"
+    options?: { label: string; value: string }[]; // untuk type "radio" dan "select"
     placeholder?: string;
     accept?: string; // khusus type "file", contoh: "image/*"
 }
@@ -52,11 +59,28 @@ export default function FormFields({ fields, errors, defaults = {} }: FormFields
                                     );
                                 })}
                             </RadioGroup>
+                        ) : item.type === "select" ? (
+                            <Select
+                                name={item.name}
+                                defaultValue={defaultValue}
+                                required={item.required}
+                            >
+                                <SelectTrigger id={id} className="w-full">
+                                    <SelectValue placeholder={item.placeholder ?? "Pilih salah satu"} />
+                                </SelectTrigger>
+                                <SelectContent>
+                                    {item.options?.map((opt) => (
+                                        <SelectItem key={opt.value} value={opt.value}>
+                                            {opt.label}
+                                        </SelectItem>
+                                    ))}
+                                </SelectContent>
+                            </Select>
                         ) : isFile ? (
                             <FileInput
                                 id={id}
                                 name={item.name}
-                                required={item.required}
+                                required={item.required && !defaultValue}
                                 accept={item.accept}
                                 existingUrl={defaultValue}
                             />

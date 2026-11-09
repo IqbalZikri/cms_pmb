@@ -25,7 +25,11 @@ Route::inertia('/kontak', 'public/kontak')->name('kontak.public');
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::inertia('dashboard', 'admin/dashboard')->name('dashboard');
 
-    Route::resource('fakultas', FakultasController::class)->only('index', 'store', 'update', 'destroy');
+    Route::resource('fakultas', FakultasController::class)->parameters([
+        'fakultas' => 'fakultas'
+    ])->only('index', 'store', 'update', 'destroy');
+
+    Route::resource('prodi', ProdiController::class)->only('index', 'store', 'update', 'destroy');
 
     Route::resource('jalur-pendaftaran', JalurPendaftaranController::class)->only('index', 'store', 'update', 'destroy');
 

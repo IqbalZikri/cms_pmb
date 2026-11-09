@@ -1,4 +1,4 @@
 export type Fakultas = {
-    id: string;
+    id: number;
     nm_fakultas: string;
 };

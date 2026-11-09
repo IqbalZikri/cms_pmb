@@ -5,6 +5,7 @@ import {
     LayoutGrid,
     ListCheck,
     Newspaper,
+    University,
 } from 'lucide-react';
 import AppLogo from '@/components/app-logo';
 import { NavFooter } from '@/components/nav-footer';
@@ -22,7 +23,9 @@ import {
 import { dashboard } from '@/routes';
 import type { NavItem } from '@/types';
 import { index } from '@/routes/berita';
+import { index as index_fakultas } from '@/routes/fakultas';
 import { index as index_jalur_pendaftaran } from '@/routes/jalur-pendaftaran';
+import { index as index_prodi } from '@/routes/prodi';
 
 const mainNavItems: NavItem[] = [
     {
@@ -34,6 +37,16 @@ const mainNavItems: NavItem[] = [
         title: 'Berita',
         href: index(),
         icon: Newspaper,
+    },
+    {
+        title: 'Fakultas',
+        href: index_fakultas(),
+        icon: University,
+    },
+    {
+        title: 'Program Studi',
+        href: index_prodi(),
+        icon: BookOpen,
     },
     {
         title: 'Jalur Pendaftaran',

@@ -87,7 +87,7 @@ export default function NavbarPublic() {
                         </Link>
                     ))}
 
-                    <Link href="https://uca.ecampuz.com/eadmisi/" target="__blank" viewTransition>
+                    <Link href="https://pmb.uca.ac.id/app" target="__blank" viewTransition>
                         <Button variant={"default"}>Login</Button>
                     </Link>
                 </nav>
