@@ -1,6 +1,7 @@
 import { Link } from '@inertiajs/react';
 import {
     BookOpen,
+    ClipboardList,
     FolderGit2,
     LayoutGrid,
     ListCheck,
@@ -26,6 +27,7 @@ import { index } from '@/routes/admin/berita';
 import { index as index_fakultas } from '@/routes/admin/fakultas';
 import { index as index_jalur_pendaftaran } from '@/routes/admin/jalur-pendaftaran';
 import { index as index_prodi } from '@/routes/admin/prodi';
+import { index as tahap_registrasi } from '@/routes/admin/tahap-registrasi';
 
 const mainNavItems: NavItem[] = [
     {
@@ -47,6 +49,11 @@ const mainNavItems: NavItem[] = [
         title: 'Program Studi',
         href: index_prodi(),
         icon: BookOpen,
+    },
+    {
+        title: 'Tahap Registrasi',
+        href: tahap_registrasi(),
+        icon: ClipboardList,
     },
     {
         title: 'Jalur Pendaftaran',

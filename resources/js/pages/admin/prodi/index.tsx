@@ -108,7 +108,7 @@ export default function Index({ prodi, fakultas }: Props) {
                                         >
                                             <TableCell>{index + 1}</TableCell>
                                             <TableCell>
-                                                {item.fakultas.nm_fakultas}
+                                                {item.fakultas?.nm_fakultas}
                                             </TableCell>
                                             <TableCell>
                                                 {item.nm_prodi}

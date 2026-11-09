@@ -9,6 +9,7 @@ use App\Http\Controllers\JalurPendaftaranController;
 use App\Http\Controllers\KategoriController;
 use App\Http\Controllers\PanduanPendaftaranController;
 use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\TahapRegistrasiController;
 use Illuminate\Support\Facades\Route;
 
 // Route::inertia('/', 'welcome')->name('home');
@@ -32,6 +33,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('prodi', ProdiController::class)->only('index', 'store', 'update', 'destroy');
 
     Route::resource('jalur-pendaftaran', JalurPendaftaranController::class)->only('index', 'store', 'update', 'destroy');
+
+    Route::resource('tahap-registrasi', TahapRegistrasiController::class)->only('index', 'store');
 
     Route::delete('berita/bulk', [BeritaController::class, 'bulkDestroy'])
         ->name('berita.bulk-destroy');

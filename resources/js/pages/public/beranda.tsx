@@ -1,8 +1,10 @@
 import { Berita } from '@/types/berita';
 import { JalurPendaftaran } from '@/types/jalur-pendaftaran';
 import { Prodi } from '@/types/prodi';
+import { Tahap, TahapRegistrasi } from '@/types/tahap-registrasi';
 import { Head } from '@inertiajs/react';
 import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
+import { BookOpen } from 'lucide-react';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 
 /* ------------------------------------------------------------------ */
@@ -18,6 +20,7 @@ interface Props {
     prodi: Prodi[];
     berita: Berita[];
     jalurPendaftaran: JalurPendaftaran[];
+    tahapRegistrasi: TahapRegistrasi;
 }
 
 const slides = [
@@ -67,11 +70,11 @@ const alur = [
     },
 ];
 
-const gelombang = [
-    { nama: 'Gelombang 1', tanggal: 'Isi tanggal', status: 'Segera hadir' },
-    { nama: 'Gelombang 2', tanggal: 'Isi tanggal', status: 'Segera hadir' },
-    { nama: 'Gelombang 3', tanggal: 'Isi tanggal', status: 'Segera hadir' },
-]; // TODO: jadwal resmi
+// const gelombang = [
+//     { nama: 'Gelombang 1', tanggal: 'Isi tanggal', status: 'Segera hadir' },
+//     { nama: 'Gelombang 2', tanggal: 'Isi tanggal', status: 'Segera hadir' },
+//     { nama: 'Gelombang 3', tanggal: 'Isi tanggal', status: 'Segera hadir' },
+// ]; // TODO: jadwal resmi
 
 const beasiswa = [
     'Beasiswa prestasi akademik',
@@ -223,7 +226,12 @@ function Faq({ q, a }: { q: string; a: string }) {
 /*  Halaman                                                            */
 /* ------------------------------------------------------------------ */
 
-export default function Beranda({ prodi, berita, jalurPendaftaran }: Props) {
+export default function Beranda({
+    prodi,
+    berita,
+    jalurPendaftaran,
+    tahapRegistrasi,
+}: Props) {
     const [index, setIndex] = useState(0);
     const [filter, setFilter] = useState('Semua');
     const [direction, setDirection] = useState(1);
@@ -268,6 +276,11 @@ export default function Beranda({ prodi, berita, jalurPendaftaran }: Props) {
     ];
     const prodiTampil =
         filter === 'Semua' ? prodi : prodi.filter((p) => p.jenjang === filter);
+
+    const normalisasi = (item: Tahap | string): Tahap =>
+        typeof item === 'string' ? { judul: item, deskripsi: '' } : item;
+
+    const saved = (tahapRegistrasi?.tahap_registrasi ?? []).map(normalisasi);
 
     return (
         <>
@@ -445,65 +458,90 @@ export default function Beranda({ prodi, berita, jalurPendaftaran }: Props) {
                     sub="Filter berdasarkan jenjang untuk melihat pilihan yang tersedia."
                     className="bg-[#f3f6f5]"
                 >
-                    <div
-                        className="flex flex-wrap gap-2"
-                        role="tablist"
-                        aria-label="Filter jenjang"
-                    >
-                        {jenjang.map((j) => (
-                            <button
-                                key={j}
-                                role="tab"
-                                aria-selected={filter === j}
-                                onClick={() => setFilter(j)}
-                                className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
-                                    filter === j
-                                        ? 'bg-[#0f7134] text-white'
-                                        : 'bg-white text-neutral-700 hover:bg-[#e8decd]'
-                                }`}
+                    {prodi.length > 0 ? (
+                        <>
+                            <div
+                                className="flex flex-wrap gap-2"
+                                role="tablist"
+                                aria-label="Filter jenjang"
                             >
-                                {j}
-                            </button>
-                        ))}
-                    </div>
+                                {jenjang.map((j) => (
+                                    <button
+                                        key={j}
+                                        role="tab"
+                                        aria-selected={filter === j}
+                                        onClick={() => setFilter(j)}
+                                        className={`rounded-full px-5 py-2 text-sm font-semibold transition ${
+                                            filter === j
+                                                ? 'bg-[#0f7134] text-white'
+                                                : 'bg-white text-neutral-700 hover:bg-[#e8decd]'
+                                        }`}
+                                    >
+                                        {j}
+                                    </button>
+                                ))}
+                            </div>
 
-                    <motion.div
-                        layout
-                        className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
-                    >
-                        <AnimatePresence mode="popLayout">
-                            {prodiTampil.map((p) => (
-                                <motion.a
-                                    layout
-                                    key={p.nm_prodi}
-                                    href={DAFTAR_URL}
-                                    initial={{ opacity: 0, scale: 0.95 }}
-                                    animate={{ opacity: 1, scale: 1 }}
-                                    exit={{ opacity: 0, scale: 0.95 }}
-                                    className="group flex items-start gap-4 rounded-2xl bg-white p-6 transition hover:shadow-lg hover:shadow-[#0f7134]/10"
-                                >
-                                    <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#ffb652]/25 text-[#c96517]">
-                                        <Icon name="cap" />
-                                    </div>
-                                    <div className="flex-1">
-                                        <p className="text-sm text-neutral-500">
-                                            {p.fakultas?.nm_fakultas}
-                                        </p>
-                                        <h3 className="mt-0.5 text-lg font-bold">
-                                            {p.nm_prodi}
-                                        </h3>
-                                        <span className="mt-3 inline-block rounded-full bg-[#0f7134]/10 px-3 py-1 text-xs font-semibold text-[#0f7134]">
-                                            {p.jenjang}
-                                        </span>
-                                    </div>
-                                    <Icon
-                                        name="arrow"
-                                        className="h-5 w-5 text-neutral-300 transition group-hover:translate-x-1 group-hover:text-[#c96517]"
+                            <motion.div
+                                layout
+                                className="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3"
+                            >
+                                <AnimatePresence mode="popLayout">
+                                    {prodiTampil.map((p) => (
+                                        <motion.a
+                                            layout
+                                            key={p.nm_prodi}
+                                            href={DAFTAR_URL}
+                                            initial={{
+                                                opacity: 0,
+                                                scale: 0.95,
+                                            }}
+                                            animate={{ opacity: 1, scale: 1 }}
+                                            exit={{ opacity: 0, scale: 0.95 }}
+                                            className="group flex items-start gap-4 rounded-2xl bg-white p-6 transition hover:shadow-lg hover:shadow-[#0f7134]/10"
+                                        >
+                                            <div className="grid h-12 w-12 shrink-0 place-items-center rounded-xl bg-[#ffb652]/25 text-[#c96517]">
+                                                <Icon name="cap" />
+                                            </div>
+                                            <div className="flex-1">
+                                                <p className="text-sm text-neutral-500">
+                                                    {p.fakultas?.nm_fakultas}
+                                                </p>
+                                                <h3 className="mt-0.5 text-lg font-bold">
+                                                    {p.nm_prodi}
+                                                </h3>
+                                                <span className="mt-3 inline-block rounded-full bg-[#0f7134]/10 px-3 py-1 text-xs font-semibold text-[#0f7134]">
+                                                    {p.jenjang}
+                                                </span>
+                                            </div>
+                                            <Icon
+                                                name="arrow"
+                                                className="h-5 w-5 text-neutral-300 transition group-hover:translate-x-1 group-hover:text-[#c96517]"
+                                            />
+                                        </motion.a>
+                                    ))}
+                                </AnimatePresence>
+                            </motion.div>
+                        </>
+                    ) : (
+                        <>
+                            <div className="flex flex-col items-center justify-center rounded-3xl border border-dashed border-[#e8decd] bg-white px-6 py-16 text-center">
+                                <div className="flex h-16 w-16 items-center justify-center rounded-full bg-[#0f7134]/10 text-[#0f7134]">
+                                    <BookOpen
+                                        className="h-8 w-8"
+                                        strokeWidth={1.8}
                                     />
-                                </motion.a>
-                            ))}
-                        </AnimatePresence>
-                    </motion.div>
+                                </div>
+                                <h3 className="mt-5 text-xl font-bold text-neutral-800">
+                                    Belum ada Program Studi
+                                </h3>
+                                <p className="mt-2 max-w-md text-neutral-600">
+                                    Program studi baru akan tampil di sini.
+                                    Silakan kembali lagi nanti.
+                                </p>
+                            </div>
+                        </>
+                    )}
                 </Section>
 
                 {/* ============ BERITA ============ */}
@@ -638,26 +676,30 @@ export default function Beranda({ prodi, berita, jalurPendaftaran }: Props) {
                 {/* ============ ALUR ============ */}
                 <Section
                     id="alur"
-                    judul="Enam langkah menjadi mahasiswa baru"
+                    judul="langkah menjadi mahasiswa baru"
                     sub="Seluruh proses dilakukan online lewat portal pendaftaran."
                     className="bg-[#e8decd]/45"
                 >
                     <ol className="grid gap-x-10 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
-                        {alur.map((a, i) => (
-                            <li key={a.judul} className="flex gap-5">
-                                <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#c96517] text-lg font-bold text-white">
-                                    {i + 1}
-                                </span>
-                                <div>
-                                    <h3 className="text-lg font-bold">
-                                        {a.judul}
-                                    </h3>
-                                    <p className="mt-1 text-neutral-700">
-                                        {a.isi}
-                                    </p>
-                                </div>
-                            </li>
-                        ))}
+                        {!tahapRegistrasi && (
+                            <>
+                                {saved.map((a, i) => (
+                                    <li key={i} className="flex gap-5">
+                                        <span className="grid h-12 w-12 shrink-0 place-items-center rounded-full bg-[#c96517] text-lg font-bold text-white">
+                                            {i + 1}
+                                        </span>
+                                        <div>
+                                            <h3 className="text-lg font-bold">
+                                                {a?.judul}
+                                            </h3>
+                                            <p className="mt-1 text-neutral-700">
+                                                {a.deskripsi}
+                                            </p>
+                                        </div>
+                                    </li>
+                                ))}
+                            </>
+                        )}
                     </ol>
                 </Section>
 
