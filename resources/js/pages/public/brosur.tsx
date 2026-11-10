@@ -17,7 +17,7 @@ const brosurList = [
             'Kenali informasi penerimaan mahasiswa baru, jadwal pendaftaran, persyaratan, dan tahapan seleksi.',
         detail: 'Informasi umum',
         icon: GraduationCap,
-        file: '/brosur/brosur-pmb.pdf',
+        file: '#',
         warna: 'bg-[var(--forest)]',
         nomor: '01',
     },
@@ -29,7 +29,7 @@ const brosurList = [
             'Temukan pilihan program studi, gambaran pembelajaran, dan peluang pengembangan kompetensi.',
         detail: 'Informasi akademik',
         icon: BookOpen,
-        file: '/brosur/brosur-program-studi.pdf',
+        file: '#',
         warna: 'bg-[var(--ink)]',
         nomor: '02',
     },
@@ -41,7 +41,7 @@ const brosurList = [
             'Pelajari informasi biaya pendidikan, pilihan bantuan pendidikan, dan program beasiswa.',
         detail: 'Informasi pembiayaan',
         icon: FileText,
-        file: '/brosur/brosur-biaya-beasiswa.pdf',
+        file: '#',
         warna: 'bg-[#75532d]',
         nomor: '03',
     },
@@ -220,7 +220,7 @@ export default function Brosur() {
 
                                         <a
                                             href={brosur.file}
-                                            download
+                                            // download
                                             className="inline-flex items-center justify-center gap-2 rounded-full bg-[var(--forest)] px-4 py-3 text-sm font-semibold text-white transition hover:bg-[var(--ink)]"
                                         >
                                             Unduh
