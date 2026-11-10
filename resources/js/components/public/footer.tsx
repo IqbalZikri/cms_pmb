@@ -14,6 +14,7 @@ import {
 } from "lucide-react";
 import { Button } from "../ui/button";
 import { SharedData } from "@/pages/interface/siteData";
+import { TikTokIcon } from "@/pages/public/kontak";
 
 const navigation = [
     { label: "Beranda", href: "/" },
@@ -26,12 +27,13 @@ const navigation = [
 ];
 
 export function FooterPublic() {
-    const { site } = usePage<SharedData>().props;
+    const { site } = usePage<SharedData>().props;    
 
     const sosmed = [
         { label: "Instagram", icon: Instagram, url: site.instagram },
         { label: "Facebook", icon: Facebook, url: site.facebook },
         { label: "Twitter", icon: Twitter, url: site.twitter },
+        { label: "Tiktok", icon: TikTokIcon, url: site.tiktok },
         {
             label: "WhatsApp",
             icon: MessageCircle,

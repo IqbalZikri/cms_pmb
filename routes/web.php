@@ -7,8 +7,10 @@ use App\Http\Controllers\BiayaKuliahController;
 use App\Http\Controllers\FakultasController;
 use App\Http\Controllers\JalurPendaftaranController;
 use App\Http\Controllers\KategoriController;
+use App\Http\Controllers\KontakController;
 use App\Http\Controllers\PanduanPendaftaranController;
 use App\Http\Controllers\ProdiController;
+use App\Http\Controllers\SiteSettingsController;
 use App\Http\Controllers\TahapRegistrasiController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,7 +23,7 @@ Route::get('/beasiswa', [BeasiswaController::class, 'public'])->name('beasiswa.p
 Route::get('/panduan', [PanduanPendaftaranController::class, 'public'])->name('panduan.public');
 Route::inertia('/faq', 'public/faq')->name('faq.public');
 Route::inertia('/brosur', 'public/brosur')->name('brosur.public');
-Route::inertia('/kontak', 'public/kontak')->name('kontak.public');
+Route::get('/kontak', [KontakController::class, 'index'])->name('kontak.public');
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::inertia('dashboard', 'admin/dashboard')->name('dashboard');
@@ -43,6 +45,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::delete('kategori/bulk', [KategoriController::class, 'bulkDestroy'])
         ->name('kategori.bulk-destroy');
     Route::resource('kategori', KategoriController::class)->only('index', 'store', 'update', 'destroy');
+
+    Route::resource('/site-settings', SiteSettingsController::class)->only('index', 'update');
 });
 
 require __DIR__ . '/settings.php';

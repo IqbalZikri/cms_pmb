@@ -3,7 +3,7 @@ import { JalurPendaftaran } from '@/types/jalur-pendaftaran';
 import { Prodi } from '@/types/prodi';
 import { Tahap, TahapRegistrasi } from '@/types/tahap-registrasi';
 import { Head } from '@inertiajs/react';
-import { AnimatePresence, motion, type PanInfo } from 'framer-motion';
+import { AnimatePresence, motion, type PanInfo } from 'motion/react';
 import { BookOpen, ClipboardList } from 'lucide-react';
 import { useCallback, useEffect, useState, type ReactNode } from 'react';
 

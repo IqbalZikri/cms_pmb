@@ -2,6 +2,7 @@ import { Link } from '@inertiajs/react';
 import {
     BookOpen,
     ClipboardList,
+    Cog,
     FolderGit2,
     LayoutGrid,
     ListCheck,
@@ -28,6 +29,7 @@ import { index as index_fakultas } from '@/routes/admin/fakultas';
 import { index as index_jalur_pendaftaran } from '@/routes/admin/jalur-pendaftaran';
 import { index as index_prodi } from '@/routes/admin/prodi';
 import { index as tahap_registrasi } from '@/routes/admin/tahap-registrasi';
+import { index as site_settings } from '@/routes/admin/site-settings';
 
 const mainNavItems: NavItem[] = [
     {
@@ -64,14 +66,9 @@ const mainNavItems: NavItem[] = [
 
 const footerNavItems: NavItem[] = [
     {
-        title: 'Repository',
-        href: 'https://github.com/laravel/react-starter-kit',
-        icon: FolderGit2,
-    },
-    {
-        title: 'Documentation',
-        href: 'https://laravel.com/docs/starter-kits#react',
-        icon: BookOpen,
+        title: 'Site Settings',
+        href: site_settings(),
+        icon: Cog,
     },
 ];
 

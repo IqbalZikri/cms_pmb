@@ -8,6 +8,7 @@ export interface SiteData {
     facebook: string | null;
     instagram: string | null;
     twitter: string | null;
+    tiktok: string | null;
 }
 
 export interface SharedData {

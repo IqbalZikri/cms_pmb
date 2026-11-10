@@ -13,7 +13,7 @@ class BerandaController extends Controller
 {
     public function index()
     {
-        $jalurPendaftaran = JalurPendaftaran::get();
+        $jalurPendaftaran = JalurPendaftaran::where('status', 'Aktif')->get();
         $prodi = Prodi::with('fakultas')->get();
         $berita = Berita::latest()->with('kategori')->get();
         $tahapRegistrasi = TahapRegistrasi::first();

@@ -62,6 +62,7 @@ class HandleInertiaRequests extends Middleware
                     'facebook' => $s['facebook_url'] ?? null,
                     'instagram' => $s['instagram_url'] ?? null,
                     'twitter' => $s['twitter_url'] ?? null,
+                    'tiktok' => $s['tiktok_url'] ?? null,
                 ];
             }),
         ];
